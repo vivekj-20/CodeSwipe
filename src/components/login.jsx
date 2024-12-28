@@ -1,14 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { BASE_URL } from "./utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { addUser } from "./utils/userSlice";
+import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
     const[password,setPassword] = useState("Pass@123");
-    const[emailId,setEmail] = useState("load.king@gmail.com");
+    const[emailId,setEmail] = useState("saitama@gamil.com");
+    const[error,setError] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -19,10 +20,11 @@ const Login = () => {
             emailId,
             password,
         },{withCredentials:true});
-        dispatch(addUser(res.data));
+        dispatch(addUser(res.data.result));
         return navigate("/feed");
        }catch(err){
-        console.log(err)       
+        setError(err.response.data.result);
+        console.log(err);       
       }
     }
     return (
@@ -55,6 +57,7 @@ const Login = () => {
                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
                 </div>
+                <a className="text-red-500">{error}</a>
                 <div className="form-control mt-6">
                 <button className="btn btn-primary" onClick={onLoginClicked}>Login</button>
                 </div>
