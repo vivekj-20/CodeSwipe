@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addConnections } from '../utils/connectionSlice';
+import { Link } from "react-router-dom";
 
 const Connection = () => {
     const connections = useSelector((store) => store.connections);
@@ -38,7 +39,7 @@ const Connection = () => {
             </div>
 
             {connections.map((connection) => {
-                const { firstName, lastName, photoUrl } = connection;
+                const { _id,firstName, lastName, photoUrl } = connection;
 
                 return (
                     <div className="flex justify-center items-center my-6" key={connection._id}>
@@ -56,7 +57,9 @@ const Connection = () => {
                                 </h2>
                                 <p>friends !!</p>
                                 <div className="card-actions justify-end">
-                                    <button className="btn btn-primary">Chat Now</button>
+                                <Link to={"/chat/" + _id}>
+                                    <button className="btn btn-primary">Chat</button>
+                                </Link>
                                 </div>
                             </div>
                         </div>
